@@ -1,5 +1,10 @@
 Revision history for Perl extension Data::HTMLDumper.
 
+0.02  Wed Oct  8 08:09:51 CDT 2003
+        - Added Test::More to the prerequisite list in Makefile.PL.
+        - Corrected tests so they no longer rely on the order of hash
+          keys.
+
 0.01  Tue Jun 17 08:41:11 2003
 	- original version; created by h2xs 1.22 with options
 		-AXn Data::HTMLDumper

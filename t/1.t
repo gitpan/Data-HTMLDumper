@@ -3,22 +3,45 @@
 
 #########################
 
-# change 'tests => 1' to 'tests => last_test_to_print';
-
-use Test::More tests => 2;
+use Test::More tests => 4;
 BEGIN { use_ok('Data::HTMLDumper') };
 
 #########################
 
+my $list = [
+    "phil", "crow", "programmer"
+];
+
+my $table = Dumper($list);
+my $expected_table = <<EOJ;
+<table border='1'><tr><td>
+
+          phil</td></tr><tr><td>
+          crow</td></tr><tr><td>
+          programmer
+        </td></tr></table>
+EOJ
+
+is($table, $expected_table, "simple list");
+
+my $first_hash = {
+    name => "phil"
+};
+my $first_hash_table = Dumper($first_hash);
+my $expected_first_hash = <<EOJ;
+<table border='1'><tr><td>
+
+          name </td><td> phil
+        </td></tr></table>
+EOJ
+
+is($first_hash_table, $expected_first_hash, "simple hash");
+
 my $hash = {
     phil => [
-        { type => 'desk', number => '6666' },
-        { type => 'home', number => '555-3489' },
-        { type => 'pager', number => '555-0123' }
-    ],
-    frank => [
-        { type => 'desk', number => '5555' },
-        { type => 'cell', number => '555-1111' }
+        { type => 'desk'},
+        { type => 'home'},
+        { type => 'pager'},
     ],
 };
 
@@ -41,38 +64,19 @@ __DATA__
 
                       <table border='1'><tr><td>
 
-                        number </td><td> 6666</td></tr><tr><td>
                         type </td><td> desk
                       </td></tr></table>
 </td></tr><tr><td>
                       <table border='1'><tr><td>
 
-                        number </td><td> 555-3489</td></tr><tr><td>
                         type </td><td> home
                       </td></tr></table>
 </td></tr><tr><td>
                       <table border='1'><tr><td>
 
-                        number </td><td> 555-0123</td></tr><tr><td>
                         type </td><td> pager
                       </td></tr></table>
 
                     </td></tr></table>
-</td></tr><tr><td>
-          frank </td><td> <table border='1'><tr><td>
-
-                       <table border='1'><tr><td>
-
-                         number </td><td> 5555</td></tr><tr><td>
-                         type </td><td> desk
-                       </td></tr></table>
-</td></tr><tr><td>
-                       <table border='1'><tr><td>
-
-                         number </td><td> 555-1111</td></tr><tr><td>
-                         type </td><td> cell
-                       </td></tr></table>
-
-                     </td></tr></table>
 
         </td></tr></table>
