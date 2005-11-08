@@ -24,7 +24,7 @@ EOJ
 
 is($table, $expected_table, "simple list");
 
-my $list = [
+$list = [
     "phil", "crow", "programmer",
 ];
 

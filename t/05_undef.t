@@ -1,6 +1,8 @@
 use Test::More tests => 1;
 use Data::HTMLDumper;
 
+warn "Ignore warnings, undef test in progress.\n";
+
 my $hash = {
     attribute => "avalue", property => { 1, 2, 3 }
 };

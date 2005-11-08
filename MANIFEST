@@ -13,5 +13,7 @@ t/06_empty_structs.t
 t/07_multiarg.t
 t/08_specialvars.t
 t/09_oo_calls.t
+t/10_inside_out_obj.t
 examples/code
 examples/code.html
+META.yml                                 Module meta-data (added by MakeMaker)

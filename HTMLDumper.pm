@@ -15,7 +15,7 @@ our @EXPORT = qw(
 	Dumper
 );
 
-our $VERSION = '0.07';
+our $VERSION = '0.08';
 
 use Data::HTMLDumper::Output;
 use Data::Dumper ();
@@ -55,6 +55,11 @@ my $grammar = q{
          | array       COMMA(?) { &{$actions}->item_array ($item{array}) }
          | hash        COMMA(?) { &{$actions}->item_hash  ($item{hash} ) }
          | object      COMMA(?) { &{$actions}->item_object($item{object})}
+         | inside_out_object COMMA(?) {
+                &{$actions}->item_inside_out_object(
+                    $item{inside_out_object}
+                );
+           }
 
     array  : '[' item(s) ']'    { &{$actions}->array($item{'item(s)'}) }
            | '[' ']'            { &{$actions}->array_empty()           }
@@ -69,6 +74,14 @@ my $grammar = q{
     object : 'bless(' item string ')' {
         &{$actions}->object($item{item}, $item{string});
     }
+
+    inside_out_object : 'bless(' do_block COMMA string ')' {
+        &{$actions}->inside_out_object($item{do_block}, $item{string});
+    }
+
+    do_block : 'do' '{' NOT_BRACE '}' { $item{NOT_BRACE}; }
+
+    NOT_BRACE : /[^\}]*/ { $item[1]; }
 
     value : string | NUMBER | 'undef'
     
@@ -95,6 +108,8 @@ my $grammar = q{
 
     TICK  : "'"
 };
+
+#    do_block : 'do' '{' /[^}]*/ '}' { $item[3]; }
 
 my $parse   = new Parse::RecDescent($grammar);
 
